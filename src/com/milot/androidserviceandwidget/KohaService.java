@@ -24,13 +24,13 @@ import com.android.volley.toolbox.Volley;
 
 public class KohaService extends Service {
 	String value = "s'ka info";
-	
 	  
 	  @Override
 	  public void onStart(Intent intent, int startId) {
 	
+		/* START -- Pjesa e Widget -- */  
 	    RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-		String url = "http://api.openweathermap.org/data/2.5/weather?q=Pristina, Kosovo&units=metric";
+		String url = "http://api.openweathermap.org/data/2.5/weather?q=Pristina,Kosovo&units=metric";
 		
 		JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -47,6 +47,8 @@ public class KohaService extends Service {
 				    SharedPreferences.Editor editor = settings.edit();
 				    editor.putString("kohaValue", value);
 				    editor.commit();
+				    
+				    
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -84,9 +86,12 @@ public class KohaService extends Service {
 	
 	      PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, clickIntent,
 	          PendingIntent.FLAG_UPDATE_CURRENT);
+	      
 	      remoteViews.setOnClickPendingIntent(R.id.update, pendingIntent);
 	      appWidgetManager.updateAppWidget(widgetId, remoteViews);
 	    }
+	    
+		/* END -- Pjesa e Widget -- */  
 	    
 	    
 	    NotificationCompat.Builder mBuilder =
@@ -107,9 +112,11 @@ public class KohaService extends Service {
 	                PendingIntent.FLAG_UPDATE_CURRENT
 	            );
 	    mBuilder.setContentIntent(resultPendingIntent);
+	    
 	    NotificationManager mNotificationManager =
 	        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 	    mNotificationManager.notify(0, mBuilder.build());
+	    
 	    stopSelf();
 	  }
 	

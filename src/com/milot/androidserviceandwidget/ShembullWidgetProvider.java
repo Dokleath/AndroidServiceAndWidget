@@ -14,10 +14,12 @@ public class ShembullWidgetProvider extends AppWidgetProvider {
 
     ComponentName thisWidget = new ComponentName(context,
     		ShembullWidgetProvider.class);
+    
     int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
 
     Intent intent = new Intent(context.getApplicationContext(),
         KohaService.class);
+    
     intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
 
     context.startService(intent);
